@@ -20,12 +20,12 @@ def reply():
     res = MessagingResponse()
     user = users.find_one({"number": number})
     if bool(user) == False:
-        msg = res.message("Hi, thanks for contacting *Ness Cakes*.\nYou can choose from one of the options below: "
-                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* cakes \n 3️⃣ To know our *working hours* \n 4️⃣ "
+        msg = res.message("Hi, thanks for contacting *Ness Bakery*.\nYou can choose from one of the options below: "
+                    "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
                     "To get our *address*")
         msg.media("https://i.ibb.co/BPKnXVP/Red-Velvet-Cake-Waldorf-Astoria.jpg")
-        users.insert_one({"number": number, "status": "app", "messages": []})
-    elif user["status"] == "app":
+        users.insert_one({"number": number, "status": "main", "messages": []})
+    elif user["status"] == "main":
         try:
             option = int(text)
         except:
@@ -47,7 +47,7 @@ def reply():
 
         elif option == 4:
             res.message(
-                "We have multiple stores across the city. Our main center is at *Buruburu Phase 3, Nairobi*")
+                "We have multiple stores across the city. Our main center is at *Buruburu, Nairobi*")
         else:
             res.message("Please enter a valid response")
     elif user["status"] == "ordering":
@@ -58,7 +58,7 @@ def reply():
             return str(res)
         if option == 0:
             users.update_one(
-                {"number": number}, {"$set": {"status": "app"}})
+                {"number": number}, {"$set": {"status": "main"}})
             res.message("You can choose from one of the options below: "
                         "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
                         "To get our *address*")
@@ -86,10 +86,10 @@ def reply():
                     "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
                     "To get our *address*")
         users.update_one(
-            {"number": number}, {"$set": {"status": "app"}})
+            {"number": number}, {"$set": {"status": "main"}})
     users.update_one({"number": number}, {"$push": {"messages": {"text": text, "date": datetime.now()}}})
     return str(res)
 
 
-if __name__ == "__app__":
+if __name__ == "__main__":
     app.run()
