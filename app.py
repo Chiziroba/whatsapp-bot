@@ -86,7 +86,7 @@ def reply():
                     "\n\n*Type*\n\n 1️⃣ To *contact* us \n 2️⃣ To *order* snacks \n 3️⃣ To know our *working hours* \n 4️⃣ "
                     "To get our *address*")
         users.update_one(
-            {"number": number}, {"$set": {"status": "main"}})
+            {"number": number}, {"$set": {"status": "app"}})
     users.update_one({"number": number}, {"$push": {"messages": {"text": text, "date": datetime.now()}}})
     return str(res)
 
